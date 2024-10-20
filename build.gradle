@@ -49,10 +49,10 @@ tasks.named('test') {
 
 tasks.test {
 	// Groovyでのテスト時、Sharing のWARNINGエラーを消去する
-	jvmArgs "-Xshare:off";
+	jvmArgs "-Xshare:off"
 }
 
 tasks.withType(Test) {
 	// Dynamic loading のWARNINGエラーを消去する
-	jvmArgs "-XX:+EnableDynamicAgentLoading";
+	jvmArgs "-XX:+EnableDynamicAgentLoading"
 }
