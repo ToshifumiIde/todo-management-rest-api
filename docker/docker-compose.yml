@@ -1,0 +1,38 @@
+services:
+  todo-management-api-web:
+    container_name: todo-management-api-web
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - 2000:8080
+      - 5005:5005
+    networks:
+      - todo-management-backend
+    depends_on:
+      - todo-management-api-db
+    volumes:
+      - ../:/app
+  todo-management-api-db:
+    image: mysql:8.4
+    platform: linux/amd64
+    container_name: todo-management-api-db
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - 2500:3306
+    networks:
+      - todo-management-backend
+    volumes:
+      - ../sql/conf:/etc/mysql/conf.d
+      - todo-management-api-db:/var/lib/mysql
+      - ../sql/initdb.d:/docker-entrypoint-initdb.d
+
+networks:
+  todo-management-backend:
+
+volumes:
+  todo-management-api-db:
