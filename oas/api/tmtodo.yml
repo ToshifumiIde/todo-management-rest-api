@@ -1,0 +1,194 @@
+openapi: 3.0.3
+info:
+  title: ""
+  version: "1.0.0"
+tags:
+  - name: tmtodo
+    description: ToDoを管理するAPI
+paths:
+  /todos:
+    get:
+      operationId: listTodos
+      summary: タスク一覧を取得する [機能ID] TMTODO01
+      tags:
+        - tmtodo
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TodoReadDtoList"
+    post:
+      operationId: createTodo
+      summary: タスクを生成する [機能ID] TMTODO02
+      tags:
+        - tmtodo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TodoRegistrationDto"
+      responses:
+        "200":
+          description: OK
+  /todos/{uuid}:
+    get:
+      operationId: getTodoByUuid
+      summary: タスクを1件取得する [機能ID] TMTODO03
+      tags:
+        - tmtodo
+      parameters:
+        - name: uuid
+          description: TodoUUID
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 32
+            maxLength: 32
+            example: a123456789012345678901234567890z
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TodoReadDto"
+    put:
+      operationId: putTodoByUuid
+      summary: タスクを1件更新する [機能ID] TMTODO04
+      tags:
+        - tmtodo
+      parameters:
+        - name: uuid
+          description: TodoUUID
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 32
+            maxLength: 32
+            example: a123456789012345678901234567890z
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TodoUpdateDto"
+      responses:
+        "200":
+          description: OK
+    delete:
+      operationId: deleteTodoByUuid
+      summary: タスクを1件削除する
+      tags:
+        - tmtodo
+      parameters:
+        - name: uuid
+          description: TodoUUID
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 32
+            maxLength: 32
+            example: a123456789012345678901234567890z
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Not Found
+
+components:
+  schemas:
+    TodoReadDtoList:
+      description: Todoのリストを格納するDto
+      type: object
+      properties:
+        dataList:
+          description: Todoのリストを格納する配列
+          type: array
+          items:
+            $ref: "#/components/schemas/TodoReadDto"
+    TodoReadRow:
+      type: object
+      description: Todoリストの各要素を格納するDto
+      properties:
+        uuid:
+          type: string
+          description: UUID
+          example: a123456789012345678901234567890z
+        title:
+          type: string
+          description: Todoのタイトル
+          example: タイトル
+        description:
+          type: string
+          description: Todoの説明
+          example: 説明
+        completed:
+          type: boolean
+          description: Todoの完了状況
+          example: true
+    TodoReadDto:
+      type: object
+      description: Todoの詳細情報を格納するDto
+      properties:
+        uuid:
+          type: string
+          description: UUID
+          example: a123456789012345678901234567890z
+        title:
+          type: string
+          description: Todoのタイトル
+          example: タイトル
+        description:
+          type: string
+          description: Todoの説明
+          example: 説明
+        completed:
+          type: boolean
+          description: Todoの完了状況
+          example: true
+    TodoRegistrationDto:
+      type: object
+      description: Todo登録用Dto
+      properties:
+        title:
+          type: string
+          description: Todoのタイトル
+          minLength: 1
+          maxLength: 255
+          example: タイトル
+        description:
+          type: string
+          description: Todoの説明
+          minLength: 1
+          maxLength: 255
+          example: 説明
+        completed:
+          type: boolean
+          description: Todoの完了状況
+          default: false
+          example: true
+    TodoUpdateDto:
+      type: object
+      description: Todo更新用Dto
+      properties:
+        title:
+          type: string
+          description: Todoのタイトル
+          minLength: 1
+          maxLength: 255
+          example: タイトル
+        description:
+          type: string
+          description: Todoの説明
+          minLength: 1
+          maxLength: 255
+          example: 説明
+        completed:
+          type: boolean
+          description: Todoの完了状況
+          default: false
+          example: true
