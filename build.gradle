@@ -1,5 +1,6 @@
 plugins {
 	id 'java'
+	id 'org.openapi.generator' version '7.2.0'
 	id 'org.springframework.boot' version '3.3.4'
 	id 'io.spring.dependency-management' version '1.1.6'
 }
@@ -24,9 +25,12 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+	implementation 'org.openapitools:jackson-databind-nullable:0.1.0'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'io.swagger.core.v3:swagger-annotations:2.2.8'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -47,6 +51,46 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+tasks.openApiGenerate {
+	def name = System.getenv('YAML')
+	def gen = System.getenv('GEN')
+	generatorName = ""
+
+	switch (gen) {
+		case "spring":
+			generatorName = "spring"
+			configFile = "$rootDir/oas/config.json".toString()
+			inputSpec = "$rootDir/oas/api/${name}.yml".toString()
+			outputDir = "$rootDir/src/main/restapi".toString()
+			apiPackage = "net.ti.todo.${name}"
+			modelPackage = "net.ti.todo.${name}.model"
+
+			generateApiTests = false
+			generateModelTests = false
+
+			generateModelDocumentation = false
+			generateApiDocumentation = false
+
+			globalProperties = [
+					modelDocs: 'false'
+			]
+			break;
+		case "ts":
+			packageName = "front.restapi.${name}"
+			generatorName = "typescript"
+			inputSpec = "$rootDir/oas/api/${name}.yml".toString()
+			outputDir = "$rootDir/ts".toString()
+			apiPackage = packageName
+			modelPackage =  "front.restapi.${name}.model"
+			break;
+		default:
+			if (gen != null) {
+				throw new GradleScriptException("invalidGeneratorName:" + gen)
+			}
+			break;
+	}
+}
+
 tasks.test {
 	// Groovyでのテスト時、Sharing のWARNINGエラーを消去する
 	jvmArgs "-Xshare:off"
@@ -55,4 +99,16 @@ tasks.test {
 tasks.withType(Test) {
 	// Dynamic loading のWARNINGエラーを消去する
 	jvmArgs "-XX:+EnableDynamicAgentLoading"
+}
+
+sourceSets {
+	main{
+		java{
+			srcDirs = [
+					'src/main/java',
+					'src/main/resources',
+					'src/main/restapi',
+			]
+		}
+	}
 }
