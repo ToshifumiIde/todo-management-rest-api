@@ -49,12 +49,12 @@ todo-management
   ┃  ┗ Dockerfile
   ┣ oas ... Swaggerに関するファイルを格納
   ┃  ┣ api
-  ┃  ┃  ┣ common
-  ┃  ┃  ┃  ┗ common.yml
-  ┃  ┃  ┗ titodo_todo.yml
-  ┃  ┗ config.json
+  ┃  ┃  ┗ tmtodo_todo.yml
+  ┃  ┗ config.json ... openApiGenerateの設定ファイル
   ┣ sql ... MySQLに関するDDL・DMLのファイルを格納
-  ┃  ┗ init.sql ... DDLファイル
+  ┃  ┣ conf ... dockerのMySQLの設定ファイルを格納
+  ┃  ┗ initdb.d ... dockerにマウントするDDLを格納するディレクトリ
+  ┃     ┗ ddl.sql
   ┣ src ... java sourceに関するファイルを格納
   ┃  ┣ main
   ┃  ┃  ┣ java
@@ -64,6 +64,7 @@ todo-management
   ┃  ┃  ┃  ┃  ┣ injector ... Dto→Entity(Model)、Entity(Model)→Dtoの変換を実行
   ┃  ┃  ┃  ┃  ┣ model ... entityでは表現仕切れない
   ┃  ┃  ┃  ┃  ┗ repository ... DBに接続するためのInterfaceを格納
+  ┃  ┃  ┃  ┣ exception ... カスタム例外処理を格納する
   ┃  ┃  ┃  ┗ service
   ┃  ┃  ┃     ┣ usecase ... ControllerとRepositoryを繋げるファイルを格納、Repositoryと1:1となる
   ┃  ┃  ┃     ┃  ┗ common ... 特例のControllerと関係なく共通で実装する
@@ -72,9 +73,12 @@ todo-management
   ┃  ┃  ┣ respurces ... MyBatisを用いたDBアクセスに関連するファイルを格納
   ┃  ┃  ┗ restapi ... openApiGenerateで生成されたAPIのInterfaceを格納
   ┃  ┗ test
-  ┃  ┃  ┣ java
-  ┃  ┃  ┣ respurces
-  ┃  ┃  ┗ restapi
+  ┃     ┣ java
+  ┃     ┣ respurces
+  ┃     ┗ restapi
+  ┃        ┗ net.ti.todo
+  ┃           ┣ exception カスタム例外処理のHandlerを格納
+  ┃           ┗ 以下、必要なAPIのインターフェースを格納
   ┣ .gitignore
   ┣ build.gradle ... gradleの設定周りのファイル
   ┣ gradlew ... GradleWrapperスクリプト、非Gradle環境下でもgradleコマンドを実行するのと同様のビルドが実行可能となる
