@@ -1,6 +1,7 @@
 package net.ti.todo.tmtodo;
 
 import lombok.RequiredArgsConstructor;
+import net.ti.todo.service.domainservice.TodosApiService;
 import net.ti.todo.tmtodo.model.TodoReadDto;
 import net.ti.todo.tmtodo.model.TodoReadDtoList;
 import net.ti.todo.tmtodo.model.TodoRegistrationDto;
@@ -12,29 +13,68 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class TodosApiImpl implements TodosApi {
+
+  private final TodosApiService todosApiService;
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public ResponseEntity<Void> completeTodoByUuid(String uuid) {
+    todosApiService.completeTodoByUuid(uuid);
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public ResponseEntity<Void> createTodo(TodoRegistrationDto todoRegistrationDto) {
-    return null;
+    todosApiService.createTodo(todoRegistrationDto);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public ResponseEntity<Void> deleteTodoByUuid(String uuid) {
-    return null;
+    todosApiService.deleteTodoByUuid(uuid);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public ResponseEntity<TodoReadDto> getTodoByUuid(String uuid) {
-    return null;
+    return new ResponseEntity<>(todosApiService.getTodoByUuid(uuid), HttpStatus.OK);
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public ResponseEntity<Void> incompleteTodoByUuid(String uuid) {
+    todosApiService.incompleteTodoByUuid(uuid);
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public ResponseEntity<TodoReadDtoList> listTodos() {
-    TodoReadDtoList list = new TodoReadDtoList();
+    TodoReadDtoList list = todosApiService.listTodos();
     return new ResponseEntity<>(list, HttpStatus.OK);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public ResponseEntity<Void> putTodoByUuid(String uuid, TodoUpdateDto todoUpdateDto) {
-    return null;
+    todosApiService.updateTodoByUuid(uuid, todoUpdateDto);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 }
