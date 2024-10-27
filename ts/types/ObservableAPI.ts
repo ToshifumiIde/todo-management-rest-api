@@ -25,6 +25,37 @@ export class ObservableTmtodoApi {
     }
 
     /**
+     * タスクを1件完了する [機能ID] TMTODO06
+     * @param uuid TodoUUID
+     */
+    public completeTodoByUuidWithHttpInfo(uuid: string, _options?: Configuration): Observable<HttpInfo<void>> {
+        const requestContextPromise = this.requestFactory.completeTodoByUuid(uuid, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (let middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (let middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.completeTodoByUuidWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * タスクを1件完了する [機能ID] TMTODO06
+     * @param uuid TodoUUID
+     */
+    public completeTodoByUuid(uuid: string, _options?: Configuration): Observable<void> {
+        return this.completeTodoByUuidWithHttpInfo(uuid, _options).pipe(map((apiResponse: HttpInfo<void>) => apiResponse.data));
+    }
+
+    /**
      * タスクを生成する [機能ID] TMTODO02
      * @param todoRegistrationDto 
      */
@@ -56,7 +87,7 @@ export class ObservableTmtodoApi {
     }
 
     /**
-     * タスクを1件削除する
+     * タスクを1件削除する [機能ID] TMTODO05
      * @param uuid TodoUUID
      */
     public deleteTodoByUuidWithHttpInfo(uuid: string, _options?: Configuration): Observable<HttpInfo<void>> {
@@ -79,7 +110,7 @@ export class ObservableTmtodoApi {
     }
 
     /**
-     * タスクを1件削除する
+     * タスクを1件削除する [機能ID] TMTODO05
      * @param uuid TodoUUID
      */
     public deleteTodoByUuid(uuid: string, _options?: Configuration): Observable<void> {
@@ -115,6 +146,37 @@ export class ObservableTmtodoApi {
      */
     public getTodoByUuid(uuid: string, _options?: Configuration): Observable<TodoReadDto> {
         return this.getTodoByUuidWithHttpInfo(uuid, _options).pipe(map((apiResponse: HttpInfo<TodoReadDto>) => apiResponse.data));
+    }
+
+    /**
+     * タスクを1件未完了にする [機能ID] TMTODO07
+     * @param uuid TodoUUID
+     */
+    public incompleteTodoByUuidWithHttpInfo(uuid: string, _options?: Configuration): Observable<HttpInfo<void>> {
+        const requestContextPromise = this.requestFactory.incompleteTodoByUuid(uuid, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (let middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (let middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.incompleteTodoByUuidWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * タスクを1件未完了にする [機能ID] TMTODO07
+     * @param uuid TodoUUID
+     */
+    public incompleteTodoByUuid(uuid: string, _options?: Configuration): Observable<void> {
+        return this.incompleteTodoByUuidWithHttpInfo(uuid, _options).pipe(map((apiResponse: HttpInfo<void>) => apiResponse.data));
     }
 
     /**

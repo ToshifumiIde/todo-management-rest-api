@@ -4,12 +4,68 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**completeTodoByUuid**](TmtodoApi.md#completeTodoByUuid) | **PUT** /todos/{uuid}:complete | タスクを1件完了する [機能ID] TMTODO06
 [**createTodo**](TmtodoApi.md#createTodo) | **POST** /todos | タスクを生成する [機能ID] TMTODO02
-[**deleteTodoByUuid**](TmtodoApi.md#deleteTodoByUuid) | **DELETE** /todos/{uuid} | タスクを1件削除する
+[**deleteTodoByUuid**](TmtodoApi.md#deleteTodoByUuid) | **DELETE** /todos/{uuid} | タスクを1件削除する [機能ID] TMTODO05
 [**getTodoByUuid**](TmtodoApi.md#getTodoByUuid) | **GET** /todos/{uuid} | タスクを1件取得する [機能ID] TMTODO03
+[**incompleteTodoByUuid**](TmtodoApi.md#incompleteTodoByUuid) | **PUT** /todos/{uuid}:incomplete | タスクを1件未完了にする [機能ID] TMTODO07
 [**listTodos**](TmtodoApi.md#listTodos) | **GET** /todos | タスク一覧を取得する [機能ID] TMTODO01
 [**putTodoByUuid**](TmtodoApi.md#putTodoByUuid) | **PUT** /todos/{uuid} | タスクを1件更新する [機能ID] TMTODO04
 
+
+# **completeTodoByUuid**
+> void completeTodoByUuid()
+
+
+### Example
+
+
+```typescript
+import {  } from '';
+import * as fs from 'fs';
+
+const configuration = .createConfiguration();
+const apiInstance = new .TmtodoApi(configuration);
+
+let body:.TmtodoApiCompleteTodoByUuidRequest = {
+  // string | TodoUUID
+  uuid: "a123456789012345678901234567890z",
+};
+
+apiInstance.completeTodoByUuid(body).then((data:any) => {
+  console.log('API called successfully. Returned data: ' + data);
+}).catch((error:any) => console.error(error));
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **uuid** | [**string**] | TodoUUID | defaults to undefined
+
+
+### Return type
+
+**void**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**404** | Not Found |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
 # **createTodo**
 > void createTodo()
@@ -30,7 +86,6 @@ let body:.TmtodoApiCreateTodoRequest = {
   todoRegistrationDto: {
     title: "タイトル",
     description: "説明",
-    completed: true,
   },
 };
 
@@ -175,6 +230,60 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
+# **incompleteTodoByUuid**
+> void incompleteTodoByUuid()
+
+
+### Example
+
+
+```typescript
+import {  } from '';
+import * as fs from 'fs';
+
+const configuration = .createConfiguration();
+const apiInstance = new .TmtodoApi(configuration);
+
+let body:.TmtodoApiIncompleteTodoByUuidRequest = {
+  // string | TodoUUID
+  uuid: "a123456789012345678901234567890z",
+};
+
+apiInstance.incompleteTodoByUuid(body).then((data:any) => {
+  console.log('API called successfully. Returned data: ' + data);
+}).catch((error:any) => console.error(error));
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **uuid** | [**string**] | TodoUUID | defaults to undefined
+
+
+### Return type
+
+**void**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**404** | Not Found |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
 # **listTodos**
 > TodoReadDtoList listTodos()
 
@@ -243,7 +352,6 @@ let body:.TmtodoApiPutTodoByUuidRequest = {
   todoUpdateDto: {
     title: "タイトル",
     description: "説明",
-    completed: true,
   },
 };
 

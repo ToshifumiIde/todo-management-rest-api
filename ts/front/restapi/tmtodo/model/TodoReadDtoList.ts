@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { TodoReadDto } from '../front.restapi.tmtodo.model/TodoReadDto';
+import { TodoReadRow } from '../front.restapi.tmtodo.model/TodoReadRow';
 import { HttpFile } from '../http/http';
 
 /**
@@ -20,7 +20,7 @@ export class TodoReadDtoList {
     /**
     * Todoのリストを格納する配列
     */
-    'dataList'?: Array<TodoReadDto>;
+    'dataList'?: Array<TodoReadRow>;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -28,7 +28,7 @@ export class TodoReadDtoList {
         {
             "name": "dataList",
             "baseName": "dataList",
-            "type": "Array<TodoReadDto>",
+            "type": "Array<TodoReadRow>",
             "format": ""
         }    ];
 

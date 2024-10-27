@@ -10,6 +10,15 @@ import { TodoUpdateDto } from '../front.restapi.tmtodo.model/TodoUpdateDto';
 import { ObservableTmtodoApi } from "./ObservableAPI";
 import { TmtodoApiRequestFactory, TmtodoApiResponseProcessor} from "../apis/TmtodoApi";
 
+export interface TmtodoApiCompleteTodoByUuidRequest {
+    /**
+     * TodoUUID
+     * @type string
+     * @memberof TmtodoApicompleteTodoByUuid
+     */
+    uuid: string
+}
+
 export interface TmtodoApiCreateTodoRequest {
     /**
      * 
@@ -33,6 +42,15 @@ export interface TmtodoApiGetTodoByUuidRequest {
      * TodoUUID
      * @type string
      * @memberof TmtodoApigetTodoByUuid
+     */
+    uuid: string
+}
+
+export interface TmtodoApiIncompleteTodoByUuidRequest {
+    /**
+     * TodoUUID
+     * @type string
+     * @memberof TmtodoApiincompleteTodoByUuid
      */
     uuid: string
 }
@@ -63,6 +81,22 @@ export class ObjectTmtodoApi {
     }
 
     /**
+     * タスクを1件完了する [機能ID] TMTODO06
+     * @param param the request object
+     */
+    public completeTodoByUuidWithHttpInfo(param: TmtodoApiCompleteTodoByUuidRequest, options?: Configuration): Promise<HttpInfo<void>> {
+        return this.api.completeTodoByUuidWithHttpInfo(param.uuid,  options).toPromise();
+    }
+
+    /**
+     * タスクを1件完了する [機能ID] TMTODO06
+     * @param param the request object
+     */
+    public completeTodoByUuid(param: TmtodoApiCompleteTodoByUuidRequest, options?: Configuration): Promise<void> {
+        return this.api.completeTodoByUuid(param.uuid,  options).toPromise();
+    }
+
+    /**
      * タスクを生成する [機能ID] TMTODO02
      * @param param the request object
      */
@@ -79,7 +113,7 @@ export class ObjectTmtodoApi {
     }
 
     /**
-     * タスクを1件削除する
+     * タスクを1件削除する [機能ID] TMTODO05
      * @param param the request object
      */
     public deleteTodoByUuidWithHttpInfo(param: TmtodoApiDeleteTodoByUuidRequest, options?: Configuration): Promise<HttpInfo<void>> {
@@ -87,7 +121,7 @@ export class ObjectTmtodoApi {
     }
 
     /**
-     * タスクを1件削除する
+     * タスクを1件削除する [機能ID] TMTODO05
      * @param param the request object
      */
     public deleteTodoByUuid(param: TmtodoApiDeleteTodoByUuidRequest, options?: Configuration): Promise<void> {
@@ -108,6 +142,22 @@ export class ObjectTmtodoApi {
      */
     public getTodoByUuid(param: TmtodoApiGetTodoByUuidRequest, options?: Configuration): Promise<TodoReadDto> {
         return this.api.getTodoByUuid(param.uuid,  options).toPromise();
+    }
+
+    /**
+     * タスクを1件未完了にする [機能ID] TMTODO07
+     * @param param the request object
+     */
+    public incompleteTodoByUuidWithHttpInfo(param: TmtodoApiIncompleteTodoByUuidRequest, options?: Configuration): Promise<HttpInfo<void>> {
+        return this.api.incompleteTodoByUuidWithHttpInfo(param.uuid,  options).toPromise();
+    }
+
+    /**
+     * タスクを1件未完了にする [機能ID] TMTODO07
+     * @param param the request object
+     */
+    public incompleteTodoByUuid(param: TmtodoApiIncompleteTodoByUuidRequest, options?: Configuration): Promise<void> {
+        return this.api.incompleteTodoByUuid(param.uuid,  options).toPromise();
     }
 
     /**

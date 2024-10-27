@@ -21,6 +21,24 @@ export class PromiseTmtodoApi {
     }
 
     /**
+     * タスクを1件完了する [機能ID] TMTODO06
+     * @param uuid TodoUUID
+     */
+    public completeTodoByUuidWithHttpInfo(uuid: string, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.completeTodoByUuidWithHttpInfo(uuid, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * タスクを1件完了する [機能ID] TMTODO06
+     * @param uuid TodoUUID
+     */
+    public completeTodoByUuid(uuid: string, _options?: Configuration): Promise<void> {
+        const result = this.api.completeTodoByUuid(uuid, _options);
+        return result.toPromise();
+    }
+
+    /**
      * タスクを生成する [機能ID] TMTODO02
      * @param todoRegistrationDto 
      */
@@ -39,7 +57,7 @@ export class PromiseTmtodoApi {
     }
 
     /**
-     * タスクを1件削除する
+     * タスクを1件削除する [機能ID] TMTODO05
      * @param uuid TodoUUID
      */
     public deleteTodoByUuidWithHttpInfo(uuid: string, _options?: Configuration): Promise<HttpInfo<void>> {
@@ -48,7 +66,7 @@ export class PromiseTmtodoApi {
     }
 
     /**
-     * タスクを1件削除する
+     * タスクを1件削除する [機能ID] TMTODO05
      * @param uuid TodoUUID
      */
     public deleteTodoByUuid(uuid: string, _options?: Configuration): Promise<void> {
@@ -71,6 +89,24 @@ export class PromiseTmtodoApi {
      */
     public getTodoByUuid(uuid: string, _options?: Configuration): Promise<TodoReadDto> {
         const result = this.api.getTodoByUuid(uuid, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * タスクを1件未完了にする [機能ID] TMTODO07
+     * @param uuid TodoUUID
+     */
+    public incompleteTodoByUuidWithHttpInfo(uuid: string, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.incompleteTodoByUuidWithHttpInfo(uuid, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * タスクを1件未完了にする [機能ID] TMTODO07
+     * @param uuid TodoUUID
+     */
+    public incompleteTodoByUuid(uuid: string, _options?: Configuration): Promise<void> {
+        const result = this.api.incompleteTodoByUuid(uuid, _options);
         return result.toPromise();
     }
 
