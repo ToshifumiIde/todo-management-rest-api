@@ -1,18 +1,10 @@
 package net.ti.todo.tmtodo.model;
 
-import java.net.URI;
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-
-import java.util.*;
 import jakarta.annotation.Generated;
+
+import java.util.Objects;
 
 /**
  * Todoの詳細情報を格納するDto
@@ -37,9 +29,10 @@ public class TodoReadDto {
 
   /**
    * UUID
+   *
    * @return uuid
-  */
-  
+   */
+
   @Schema(name = "uuid", example = "a123456789012345678901234567890z", description = "UUID", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("uuid")
   public String getUuid() {
@@ -57,9 +50,10 @@ public class TodoReadDto {
 
   /**
    * Todoのタイトル
+   *
    * @return title
-  */
-  
+   */
+
   @Schema(name = "title", example = "タイトル", description = "Todoのタイトル", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("title")
   public String getTitle() {
@@ -77,9 +71,10 @@ public class TodoReadDto {
 
   /**
    * Todoの説明
+   *
    * @return description
-  */
-  
+   */
+
   @Schema(name = "description", example = "説明", description = "Todoの説明", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("description")
   public String getDescription() {
@@ -97,9 +92,10 @@ public class TodoReadDto {
 
   /**
    * Todoの完了状況
+   *
    * @return completed
-  */
-  
+   */
+
   @Schema(name = "completed", example = "true", description = "Todoの完了状況", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("completed")
   public Boolean getCompleted() {
@@ -120,9 +116,9 @@ public class TodoReadDto {
     }
     TodoReadDto todoReadDto = (TodoReadDto) o;
     return Objects.equals(this.uuid, todoReadDto.uuid) &&
-        Objects.equals(this.title, todoReadDto.title) &&
-        Objects.equals(this.description, todoReadDto.description) &&
-        Objects.equals(this.completed, todoReadDto.completed);
+      Objects.equals(this.title, todoReadDto.title) &&
+      Objects.equals(this.description, todoReadDto.description) &&
+      Objects.equals(this.completed, todoReadDto.completed);
   }
 
   @Override

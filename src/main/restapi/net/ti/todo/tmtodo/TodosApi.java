@@ -32,6 +32,31 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public interface TodosApi {
 
   /**
+   * PUT /todos/{uuid}:complete : タスクを1件完了する [機能ID] TMTODO06
+   *
+   * @param uuid TodoUUID (required)
+   * @return OK (status code 200)
+   * or Not Found (status code 404)
+   */
+  @Operation(
+    operationId = "completeTodoByUuid",
+    summary = "タスクを1件完了する [機能ID] TMTODO06",
+    tags = {"tmtodo"},
+    responses = {
+      @ApiResponse(responseCode = "200", description = "OK"),
+      @ApiResponse(responseCode = "404", description = "Not Found")
+    }
+  )
+  @RequestMapping(
+    method = RequestMethod.PUT,
+    value = "/todos/{uuid}:complete"
+  )
+  ResponseEntity<Void> completeTodoByUuid(
+    @Size(min = 32, max = 32) @Parameter(name = "uuid", description = "TodoUUID", required = true, in = ParameterIn.PATH) @PathVariable("uuid") String uuid
+  );
+
+
+  /**
    * POST /todos : タスクを生成する [機能ID] TMTODO02
    *
    * @param todoRegistrationDto (optional)
@@ -56,7 +81,7 @@ public interface TodosApi {
 
 
   /**
-   * DELETE /todos/{uuid} : タスクを1件削除する
+   * DELETE /todos/{uuid} : タスクを1件削除する [機能ID] TMTODO05
    *
    * @param uuid TodoUUID (required)
    * @return OK (status code 200)
@@ -64,7 +89,7 @@ public interface TodosApi {
    */
   @Operation(
     operationId = "deleteTodoByUuid",
-    summary = "タスクを1件削除する",
+    summary = "タスクを1件削除する [機能ID] TMTODO05",
     tags = {"tmtodo"},
     responses = {
       @ApiResponse(responseCode = "200", description = "OK"),
@@ -102,6 +127,31 @@ public interface TodosApi {
     produces = {"application/json"}
   )
   ResponseEntity<TodoReadDto> getTodoByUuid(
+    @Size(min = 32, max = 32) @Parameter(name = "uuid", description = "TodoUUID", required = true, in = ParameterIn.PATH) @PathVariable("uuid") String uuid
+  );
+
+
+  /**
+   * PUT /todos/{uuid}:incomplete : タスクを1件未完了にする [機能ID] TMTODO07
+   *
+   * @param uuid TodoUUID (required)
+   * @return OK (status code 200)
+   * or Not Found (status code 404)
+   */
+  @Operation(
+    operationId = "incompleteTodoByUuid",
+    summary = "タスクを1件未完了にする [機能ID] TMTODO07",
+    tags = {"tmtodo"},
+    responses = {
+      @ApiResponse(responseCode = "200", description = "OK"),
+      @ApiResponse(responseCode = "404", description = "Not Found")
+    }
+  )
+  @RequestMapping(
+    method = RequestMethod.PUT,
+    value = "/todos/{uuid}:incomplete"
+  )
+  ResponseEntity<Void> incompleteTodoByUuid(
     @Size(min = 32, max = 32) @Parameter(name = "uuid", description = "TodoUUID", required = true, in = ParameterIn.PATH) @PathVariable("uuid") String uuid
   );
 
