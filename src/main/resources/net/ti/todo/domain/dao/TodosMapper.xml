@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.ti.todo.domain.dao.TodosMapper">
+    <update id="completeTodoByUuid">
+        UPDATE todo
+        SET
+        completed = true
+        WHERE
+        uuid = #{uuid}
+    </update>
+
+    <insert id="createTodo" useGeneratedKeys="true">
+        INSERT INTO todo (uuid , title , description ,completed)
+        VALUES (
+        #{uuid}
+        , #{title}
+        , #{description}
+        , false
+        )
+    </insert>
+
+    <delete id="deleteTodoByUuid">
+        DELETE
+        FROM
+        todo
+        WHERE
+        uuid = #{uuid}
+    </delete>
+
+    <select id="getTodoByUuid" resultType="net.ti.todo.domain.entity.Todo">
+        SELECT
+        uuid
+        ,title
+        ,description
+        ,completed
+        FROM
+        todo
+        WHERE
+        uuid = #{uuid}
+    </select>
+
+    <update id="incompleteTodoByUuid">
+        UPDATE todo
+        SET
+        completed = false
+        WHERE
+        uuid = #{uuid}
+    </update>
+
+    <select id="listTodos" resultType="net.ti.todo.domain.entity.Todo">
+        SELECT
+        uuid
+        ,title
+        ,description
+        ,completed
+        FROM
+        todo
+    </select>
+
+    <update id="updateTodoByUuid">
+        UPDATE todo
+        SET
+        title = #{entity.title}
+        , description = #{entity.description}
+        WHERE
+        uuid = #{uuid}
+    </update>
+</mapper>

@@ -1,22 +1,13 @@
 package net.ti.todo.tmtodo.model;
 
-import java.net.URI;
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import net.ti.todo.tmtodo.model.TodoReadDto;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-
-import java.util.*;
 import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Todoのリストを格納するDto
@@ -27,14 +18,14 @@ import jakarta.annotation.Generated;
 public class TodoReadDtoList {
 
   @Valid
-  private List<@Valid TodoReadDto> dataList;
+  private List<@Valid TodoReadRow> dataList;
 
-  public TodoReadDtoList dataList(List<@Valid TodoReadDto> dataList) {
+  public TodoReadDtoList dataList(List<@Valid TodoReadRow> dataList) {
     this.dataList = dataList;
     return this;
   }
 
-  public TodoReadDtoList addDataListItem(TodoReadDto dataListItem) {
+  public TodoReadDtoList addDataListItem(TodoReadRow dataListItem) {
     if (this.dataList == null) {
       this.dataList = new ArrayList<>();
     }
@@ -44,16 +35,17 @@ public class TodoReadDtoList {
 
   /**
    * Todoのリストを格納する配列
+   *
    * @return dataList
-  */
-  @Valid 
+   */
+  @Valid
   @Schema(name = "dataList", description = "Todoのリストを格納する配列", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataList")
-  public List<@Valid TodoReadDto> getDataList() {
+  public List<@Valid TodoReadRow> getDataList() {
     return dataList;
   }
 
-  public void setDataList(List<@Valid TodoReadDto> dataList) {
+  public void setDataList(List<@Valid TodoReadRow> dataList) {
     this.dataList = dataList;
   }
 

@@ -19,15 +19,11 @@ export class TodoRegistrationDto {
     /**
     * Todoのタイトル
     */
-    'title'?: string;
+    'title': string;
     /**
     * Todoの説明
     */
-    'description'?: string;
-    /**
-    * Todoの完了状況
-    */
-    'completed'?: boolean;
+    'description': string;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -42,12 +38,6 @@ export class TodoRegistrationDto {
             "name": "description",
             "baseName": "description",
             "type": "string",
-            "format": ""
-        },
-        {
-            "name": "completed",
-            "baseName": "completed",
-            "type": "boolean",
             "format": ""
         }    ];
 

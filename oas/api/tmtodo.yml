@@ -80,7 +80,49 @@ paths:
           description: OK
     delete:
       operationId: deleteTodoByUuid
-      summary: タスクを1件削除する
+      summary: タスクを1件削除する [機能ID] TMTODO05
+      tags:
+        - tmtodo
+      parameters:
+        - name: uuid
+          description: TodoUUID
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 32
+            maxLength: 32
+            example: a123456789012345678901234567890z
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Not Found
+  /todos/{uuid}:complete:
+    put:
+      operationId: completeTodoByUuid
+      summary: タスクを1件完了する [機能ID] TMTODO06
+      tags:
+        - tmtodo
+      parameters:
+        - name: uuid
+          description: TodoUUID
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 32
+            maxLength: 32
+            example: a123456789012345678901234567890z
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Not Found
+  /todos/{uuid}:incomplete:
+    put:
+      operationId: incompleteTodoByUuid
+      summary: タスクを1件未完了にする [機能ID] TMTODO07
       tags:
         - tmtodo
       parameters:
@@ -109,7 +151,7 @@ components:
           description: Todoのリストを格納する配列
           type: array
           items:
-            $ref: "#/components/schemas/TodoReadDto"
+            $ref: "#/components/schemas/TodoReadRow"
     TodoReadRow:
       type: object
       description: Todoリストの各要素を格納するDto
@@ -153,6 +195,9 @@ components:
     TodoRegistrationDto:
       type: object
       description: Todo登録用Dto
+      required:
+        - title
+        - description
       properties:
         title:
           type: string
@@ -166,14 +211,12 @@ components:
           minLength: 1
           maxLength: 255
           example: 説明
-        completed:
-          type: boolean
-          description: Todoの完了状況
-          default: false
-          example: true
     TodoUpdateDto:
       type: object
       description: Todo更新用Dto
+      required:
+        - title
+        - description
       properties:
         title:
           type: string
@@ -187,8 +230,3 @@ components:
           minLength: 1
           maxLength: 255
           example: 説明
-        completed:
-          type: boolean
-          description: Todoの完了状況
-          default: false
-          example: true
