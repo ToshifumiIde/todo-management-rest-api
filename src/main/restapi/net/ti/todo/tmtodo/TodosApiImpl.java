@@ -8,6 +8,7 @@ import net.ti.todo.tmtodo.model.TodoRegistrationDto;
 import net.ti.todo.tmtodo.model.TodoUpdateDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -20,6 +21,7 @@ public class TodosApiImpl implements TodosApi {
    * {@inheritDoc}
    */
   @Override
+  @PreAuthorize("hasAnyRole('ADMIN','USER')")
   public ResponseEntity<Void> completeTodoByUuid(String uuid) {
     todosApiService.completeTodoByUuid(uuid);
     return new ResponseEntity<>(HttpStatus.OK);
@@ -29,6 +31,7 @@ public class TodosApiImpl implements TodosApi {
    * {@inheritDoc}
    */
   @Override
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<Void> createTodo(TodoRegistrationDto todoRegistrationDto) {
     todosApiService.createTodo(todoRegistrationDto);
     return new ResponseEntity<>(HttpStatus.OK);
@@ -38,6 +41,7 @@ public class TodosApiImpl implements TodosApi {
    * {@inheritDoc}
    */
   @Override
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<Void> deleteTodoByUuid(String uuid) {
     todosApiService.deleteTodoByUuid(uuid);
     return new ResponseEntity<>(HttpStatus.OK);
@@ -47,6 +51,7 @@ public class TodosApiImpl implements TodosApi {
    * {@inheritDoc}
    */
   @Override
+  @PreAuthorize("hasAnyRole('ADMIN','USER')")
   public ResponseEntity<TodoReadDto> getTodoByUuid(String uuid) {
     return new ResponseEntity<>(todosApiService.getTodoByUuid(uuid), HttpStatus.OK);
   }
@@ -55,6 +60,7 @@ public class TodosApiImpl implements TodosApi {
    * {@inheritDoc}
    */
   @Override
+  @PreAuthorize("hasAnyRole('ADMIN','USER')")
   public ResponseEntity<Void> incompleteTodoByUuid(String uuid) {
     todosApiService.incompleteTodoByUuid(uuid);
     return new ResponseEntity<>(HttpStatus.OK);
@@ -64,6 +70,7 @@ public class TodosApiImpl implements TodosApi {
    * {@inheritDoc}
    */
   @Override
+  @PreAuthorize("hasAnyRole('ADMIN','USER')")
   public ResponseEntity<TodoReadDtoList> listTodos() {
     TodoReadDtoList list = todosApiService.listTodos();
     return new ResponseEntity<>(list, HttpStatus.OK);
@@ -73,6 +80,7 @@ public class TodosApiImpl implements TodosApi {
    * {@inheritDoc}
    */
   @Override
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<Void> putTodoByUuid(String uuid, TodoUpdateDto todoUpdateDto) {
     todosApiService.updateTodoByUuid(uuid, todoUpdateDto);
     return new ResponseEntity<>(HttpStatus.OK);
