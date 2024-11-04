@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.ti.todo.domain.dao.UserMapper">
+
+    <select id="countUserByEmail" resultType="int">
+        SELECT
+        COUNT(email)
+        FROM
+        user
+        WHERE
+        email = #{email}
+    </select>
+
+    <select id="getUserByUuid" resultType="net.ti.todo.domain.entity.User">
+        SELECT
+        uuid,
+        last_name,
+        first_name,
+        email
+        FROM
+        user
+        WHERE
+        uuid = #{uuid}
+    </select>
+
+    <select id="getUserByLastNameOrFirstName" resultType="net.ti.todo.domain.entity.User">
+        SELECT
+        uuid,
+        last_name,
+        first_name,
+        email
+        FROM
+        user
+        <where>
+            <if test="lastName != null and lastName != ''">
+                AND last_name LIKE CONCAT('%' , #{lastName} , '%')
+            </if>
+            <if test="firstName != null and firstName != ''">
+                AND first_name LIKE CONCAT('%' , #{lastName} , '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getUserByEmail" resultMap="userWithRolesResultMap">
+        SELECT
+        user.id AS userId,
+        user.uuid AS userUuid,
+        user.last_name AS userLastName,
+        user.first_name AS userFirstName,
+        user.email AS userEmail,
+        role.id AS roleId,
+        role.name AS roleName
+        FROM user
+        INNER JOIN
+        user_role ON user.id = user_role.user_id
+        INNER JOIN
+        role ON role.id = user_role.role_id
+        <where>
+            <if test="email != null and email != ''">
+                AND user.email LIKE CONCAT('%' , #{email} , '%')
+            </if>
+        </where>
+    </select>
+</mapper>
