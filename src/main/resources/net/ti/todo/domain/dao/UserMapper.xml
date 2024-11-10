@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.ti.todo.domain.dao.UserMapper">
+
+    <select id="countUserByEmail" resultType="int">
+        SELECT
+        COUNT(email)
+        FROM
+        user
+        WHERE
+        email = #{email}
+    </select>
+
+    <select id="getUserByUuid" resultType="net.ti.todo.domain.entity.User">
+        SELECT
+        uuid,
+        last_name,
+        first_name,
+        user_name,
+        email
+        FROM
+        user
+        WHERE
+        uuid = #{uuid}
+    </select>
+
+    <select id="getUserByLastNameOrFirstName" resultType="net.ti.todo.domain.entity.User">
+        SELECT
+        uuid,
+        last_name,
+        first_name,
+        user_name,
+        email
+        FROM
+        user
+        <where>
+            <if test="lastName != null and lastName != ''">
+                AND last_name LIKE CONCAT('%' , #{lastName} , '%')
+            </if>
+            <if test="firstName != null and firstName != ''">
+                AND first_name LIKE CONCAT('%' , #{lastName} , '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getUserByEmail" resultMap="userWithRoleResultMap">
+        SELECT
+        user.id AS userId,
+        user.uuid AS userUuid,
+        user.last_name AS userLastName,
+        user.first_name AS userFirstName,
+        user.user_name AS userName,
+        user.email AS userEmail,
+        user.password AS userPassword,
+        role.id AS roleId,
+        role.name AS roleName
+        FROM user
+        INNER JOIN
+        user_role ON user.id = user_role.user_id
+        INNER JOIN
+        role ON role.id = user_role.role_id
+        <where>
+            <if test="email != null and email != ''">
+                AND user.email LIKE CONCAT('%' , #{email} , '%')
+            </if>
+        </where>
+    </select>
+    <resultMap id="userWithRoleResultMap" type="net.ti.todo.domain.model.UserWithRole">
+        <association property="user" javaType="net.ti.todo.domain.entity.User">
+            <id property="id" column="userId" />
+            <result property="uuid" column="userUuid"/>
+            <result property="lastName" column="userLastName"/>
+            <result property="firstName" column="userFirstName"/>
+            <result property="userName" column="userName"/>
+            <result property="email" column="userEmail"/>
+            <result property="password" column="userPassword"/>
+        </association>
+        <association property="role" javaType="net.ti.todo.domain.entity.Role">
+            <result property="name" column="roleName"/>
+        </association>
+    </resultMap>
+</mapper>
