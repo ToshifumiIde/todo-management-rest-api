@@ -16,6 +16,7 @@
         uuid,
         last_name,
         first_name,
+        user_name,
         email
         FROM
         user
@@ -28,6 +29,7 @@
         uuid,
         last_name,
         first_name,
+        user_name,
         email
         FROM
         user
@@ -41,13 +43,15 @@
         </where>
     </select>
 
-    <select id="getUserByEmail" resultMap="userWithRolesResultMap">
+    <select id="getUserByEmail" resultMap="userWithRoleResultMap">
         SELECT
         user.id AS userId,
         user.uuid AS userUuid,
         user.last_name AS userLastName,
         user.first_name AS userFirstName,
+        user.user_name AS userName,
         user.email AS userEmail,
+        user.password AS userPassword,
         role.id AS roleId,
         role.name AS roleName
         FROM user
@@ -61,4 +65,18 @@
             </if>
         </where>
     </select>
+    <resultMap id="userWithRoleResultMap" type="net.ti.todo.domain.model.UserWithRole">
+        <association property="user" javaType="net.ti.todo.domain.entity.User">
+            <id property="id" column="userId" />
+            <result property="uuid" column="userUuid"/>
+            <result property="lastName" column="userLastName"/>
+            <result property="firstName" column="userFirstName"/>
+            <result property="userName" column="userName"/>
+            <result property="email" column="userEmail"/>
+            <result property="password" column="userPassword"/>
+        </association>
+        <association property="role" javaType="net.ti.todo.domain.entity.Role">
+            <result property="name" column="roleName"/>
+        </association>
+    </resultMap>
 </mapper>
