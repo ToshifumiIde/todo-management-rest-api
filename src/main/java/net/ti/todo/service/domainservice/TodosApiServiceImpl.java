@@ -12,8 +12,11 @@ import net.ti.todo.tmtodo.model.TodoReadDto;
 import net.ti.todo.tmtodo.model.TodoReadDtoList;
 import net.ti.todo.tmtodo.model.TodoRegistrationDto;
 import net.ti.todo.tmtodo.model.TodoUpdateDto;
+import org.springframework.data.annotation.ReadOnlyProperty;
+import org.springframework.data.annotation.Transient;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -32,6 +35,7 @@ public class TodosApiServiceImpl implements TodosApiService {
    * @param uuid UUID
    */
   @Override
+  @Transactional
   public void completeTodoByUuid(String uuid) {
     Todo target = todosApiUseCase.getTodoByUuid(uuid);
     if (Objects.isNull(target)) {
@@ -50,6 +54,7 @@ public class TodosApiServiceImpl implements TodosApiService {
    * @param dto タスク登録用のDto
    */
   @Override
+  @Transactional
   public void createTodo(TodoRegistrationDto dto) {
     Todo entity = new TodosRegistrationInjector(dto).inject();
     int result = todosApiUseCase.createTodo(entity);
@@ -65,6 +70,7 @@ public class TodosApiServiceImpl implements TodosApiService {
    * @param uuid UUID
    */
   @Override
+  @Transactional
   public void deleteTodoByUuid(String uuid) {
     int result = todosApiUseCase.deleteTodoByUuid(uuid);
     if (!Objects.equals(result, 1)) {
@@ -80,6 +86,7 @@ public class TodosApiServiceImpl implements TodosApiService {
    * @return タスクのDto
    */
   @Override
+  @Transactional(readOnly = true)
   public TodoReadDto getTodoByUuid(String uuid) {
     Todo entity = todosApiUseCase.getTodoByUuid(uuid);
     if (Objects.isNull(entity)) {
@@ -95,6 +102,7 @@ public class TodosApiServiceImpl implements TodosApiService {
    * @param uuid UUID
    */
   @Override
+  @Transactional
   public void incompleteTodoByUuid(String uuid) {
     Todo target = todosApiUseCase.getTodoByUuid(uuid);
     if (Objects.isNull(target)) {
@@ -114,6 +122,7 @@ public class TodosApiServiceImpl implements TodosApiService {
    * @param todoUpdateDto タスク更新用Dto
    */
   @Override
+  @Transactional
   public void updateTodoByUuid(String uuid, TodoUpdateDto todoUpdateDto) {
     Todo target = todosApiUseCase.getTodoByUuid(uuid);
     if (Objects.isNull(target)) {
@@ -129,6 +138,7 @@ public class TodosApiServiceImpl implements TodosApiService {
    * タスクを全件取得する
    */
   @Override
+  @Transactional(readOnly = true)
   public TodoReadDtoList listTodos() {
     List<Todo> todos = todosApiUseCase.listTodos();
     return new TodosListInjector(todos).inject();

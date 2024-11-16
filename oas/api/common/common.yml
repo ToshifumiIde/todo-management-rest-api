@@ -1,0 +1,7 @@
+components:
+  schemas:
+    UserRole:
+      type: string
+      enum:
+        - ROLE_ADMIN
+        - ROLE_USER

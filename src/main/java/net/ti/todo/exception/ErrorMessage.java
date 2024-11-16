@@ -22,4 +22,10 @@ public class ErrorMessage {
     this.title = e.getMessage().substring(0, INDEX);
     this.description = e.getMessage().substring(INDEX + 2);
   }
+
+  public ErrorMessage(RegisterException e) {
+    this.statusCode = e.getHttpStatus().value();
+    this.title = e.getMessage();
+    this.description = e.getMessage();
+  }
 }

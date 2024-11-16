@@ -8,5 +8,5 @@ export * from "./servers";
 export { RequiredError } from "./apis/baseapi";
 
 export { PromiseMiddleware as Middleware } from './middleware';
-export { PromiseTmtodoApi as TmtodoApi } from './types/PromiseAPI';
+export { PromiseTmregisApi as TmregisApi } from './types/PromiseAPI';
 

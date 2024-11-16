@@ -23,4 +23,10 @@ public class CustomExceptionHandler {
       .status(message.getStatusCode())
       .body(message);
   }
+
+  @ExceptionHandler(RegisterException.class)
+  public ResponseEntity<ErrorMessage> handleRegisterException(RegisterException e){
+    ErrorMessage message= new ErrorMessage(e);
+    return ResponseEntity.status(message.getStatusCode()).body(message);
+  }
 }
