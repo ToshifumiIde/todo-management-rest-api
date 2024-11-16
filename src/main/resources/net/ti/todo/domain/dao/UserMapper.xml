@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.ti.todo.domain.dao.UserMapper">
 
-    <select id="countUserByEmail" resultType="int">
+    <select id="confirmExistenceByEmail" resultType="int">
         SELECT
-        COUNT(email)
+        1
         FROM
         user
         WHERE
@@ -65,9 +65,26 @@
             </if>
         </where>
     </select>
+
+    <insert id="createUser" useGeneratedKeys="true" parameterType="net.ti.todo.domain.entity.User">
+        INSERT INTO user (uuid , last_name, first_name , user_name , email , password)VALUES
+        (
+        #{uuid},
+        #{lastName},
+        #{firstName},
+        #{userName},
+        #{email},
+        #{password}
+        )
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            select @@IDENTITY
+        </selectKey>
+    </insert>
+
+
     <resultMap id="userWithRoleResultMap" type="net.ti.todo.domain.model.UserWithRole">
         <association property="user" javaType="net.ti.todo.domain.entity.User">
-            <id property="id" column="userId" />
+            <id property="id" column="userId"/>
             <result property="uuid" column="userUuid"/>
             <result property="lastName" column="userLastName"/>
             <result property="firstName" column="userFirstName"/>
