@@ -1,14 +1,8 @@
-export * from '../front.restapi.tmtodo.model/TodoReadDto';
-export * from '../front.restapi.tmtodo.model/TodoReadDtoList';
-export * from '../front.restapi.tmtodo.model/TodoReadRow';
-export * from '../front.restapi.tmtodo.model/TodoRegistrationDto';
-export * from '../front.restapi.tmtodo.model/TodoUpdateDto';
+export * from '../front.restapi.tmregis.model/RegisterUserDto';
+export * from '../front.restapi.tmregis.model/UserRole';
 
-import { TodoReadDto } from '../front.restapi.tmtodo.model/TodoReadDto';
-import { TodoReadDtoList } from '../front.restapi.tmtodo.model/TodoReadDtoList';
-import { TodoReadRow } from '../front.restapi.tmtodo.model/TodoReadRow';
-import { TodoRegistrationDto } from '../front.restapi.tmtodo.model/TodoRegistrationDto';
-import { TodoUpdateDto } from '../front.restapi.tmtodo.model/TodoUpdateDto';
+import { RegisterUserDto      } from '../front.restapi.tmregis.model/RegisterUserDto';
+import { UserRole } from '../front.restapi.tmregis.model/UserRole';
 
 /* tslint:disable:no-unused-variable */
 let primitives = [
@@ -23,14 +17,11 @@ let primitives = [
                  ];
 
 let enumsMap: Set<string> = new Set<string>([
+    "UserRole",
 ]);
 
 let typeMap: {[index: string]: any} = {
-    "TodoReadDto": TodoReadDto,
-    "TodoReadDtoList": TodoReadDtoList,
-    "TodoReadRow": TodoReadRow,
-    "TodoRegistrationDto": TodoRegistrationDto,
-    "TodoUpdateDto": TodoUpdateDto,
+    "RegisterUserDto": RegisterUserDto,
 }
 
 type MimeTypeDescriptor = {
