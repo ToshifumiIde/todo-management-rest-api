@@ -10,12 +10,12 @@ import java.util.List;
 public interface UserRepository {
 
   /**
-   * emailを指定してユーザーを1件取得する
+   * emailを指定してユーザーの存在有無を確認する
    *
    * @param email ユーザーのemail
-   * @return Boolean emailの存在有無
+   * @return 存在する場合は1、存在しない場合はNull
    */
-  Integer countUserByEmail(String email);
+  Integer confirmExistenceByEmail(String email);
 
   /**
    * uuidを指定してユーザーを1件取得する
@@ -42,4 +42,13 @@ public interface UserRepository {
    * @return 条件に合致するユーザー
    */
   UserWithRole getUserByEmail(String email);
+
+
+  /**
+   * User情報を元にUserを登録する
+   *
+   * @param user ユーザー情報
+   * @return 登録成功時1、失敗時0
+   */
+  int createUser(User user);
 }

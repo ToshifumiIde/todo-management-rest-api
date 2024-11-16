@@ -14,13 +14,13 @@ public class UserUseCase {
   private final UserRepository userRepository;
 
   /**
-   * emailを指定してユーザーを1件取得する
+   * emailを指定してユーザーの存在有無を確認する
    *
    * @param email ユーザーのemail
-   * @return Boolean emailの存在有無
+   * @return 存在する場合は1、存在しない場合はNull
    */
-  public Integer countUserByEmail(String email) {
-    return userRepository.countUserByEmail(email);
+  public Integer confirmExistenceByEmail(String email) {
+    return userRepository.confirmExistenceByEmail(email);
   }
 
   /**
@@ -29,7 +29,7 @@ public class UserUseCase {
    * @param email ユーザー名またはemail
    * @return 条件に合致するユーザー
    */
-  public UserWithRole getUserByEmail(String email){
+  public UserWithRole getUserByEmail(String email) {
     return userRepository.getUserByEmail(email);
   }
 
@@ -56,4 +56,13 @@ public class UserUseCase {
   }
 
 
+  /**
+   * User情報を元にユーザーを登録する
+   *
+   * @param user ユーザー情報
+   * @return 成功時1、失敗時0
+   */
+  public int createUser(User user) {
+    return userRepository.createUser(user);
+  }
 }
