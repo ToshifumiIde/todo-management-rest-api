@@ -1,0 +1,64 @@
+openapi: 3.0.3
+info:
+  title: "API"
+  version: "1.0.0"
+tags:
+  - name: tmregis
+    description: ユーザー登録を管理するAPI
+paths:
+  /register:
+    post:
+      operationId: createRegister
+      summary: ユーザー登録を実施する [機能ID] TMREGIS01
+      tags:
+        - tmregis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterUserDto"
+      responses:
+        "200":
+          description: OK
+
+components:
+  schemas:
+    RegisterUserDto:
+      type: object
+      description: ユーザー登録用Dto
+      required:
+        - lastName
+        - firstName
+        - email
+        - password
+        - role
+      properties:
+        lastName:
+          description: ユーザー名_姓
+          type: string
+          minLength: 1
+          maxLength: 255
+          example: 田中
+        firstName:
+          description: ユーザー名_名
+          type: string
+          minLength: 1
+          maxLength: 255
+          example: 太郎
+        email:
+          description: メールアドレス
+          type: string
+          x-field-extra-annotation: "@Pattern(regexp = \u0022^[a-zA-Z0-9!#$%&'*+\u005c\u005c/=?^_`{|}~-]+(\u005c\u005c.[a-zA-Z0-9!#$%&'*+\u005c\u005c/=?^_`{|}~-]+)*@[a-zA-Z0-9-]+(?:\u005c\u005c.[a-zA-Z0-9-]+)*$\u0022)"
+          minLength: 6
+          maxLength: 255
+          example: sample@gmail.com
+        password:
+          description: パスワード
+          type: string
+          minLength: 8
+          maxLength: 255
+          example: password
+        role:
+          description: 権限
+          type: string
+          $ref: "./common/common.yml#/components/schemas/UserRole"
