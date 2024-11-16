@@ -6,6 +6,28 @@ tags:
   - name: tmregis
     description: ユーザー登録を管理するAPI
 paths:
+  /login:
+    post:
+      operationId: login
+      summary: ログイン処理を実行する [機能ID] TMREGIS02
+      tags:
+        - tmregis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginDto"
+            # examples:
+            #   description:
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "./common/common.yml#/components/schemas/ResponseSingleMessage"
   /register:
     post:
       operationId: createRegister
@@ -23,6 +45,25 @@ paths:
 
 components:
   schemas:
+    LoginDto:
+      type: object
+      description: ログイン用Dto
+      required:
+        - userNameOrEmail
+        - password
+      properties:
+        userNameOrEmail:
+          description: ユーザー名またはメールアドレス
+          type: string
+          minLength: 6
+          maxLength: 255
+          example: sample@gmail.com
+        password:
+          description: パスワード
+          type: string
+          minLength: 8
+          maxLength: 255
+          example: password
     RegisterUserDto:
       type: object
       description: ユーザー登録用Dto
