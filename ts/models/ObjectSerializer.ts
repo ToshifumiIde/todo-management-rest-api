@@ -1,7 +1,11 @@
+export * from '../front.restapi.tmregis.model/LoginDto';
 export * from '../front.restapi.tmregis.model/RegisterUserDto';
+export * from '../front.restapi.tmregis.model/ResponseSingleMessage';
 export * from '../front.restapi.tmregis.model/UserRole';
 
+import { LoginDto } from '../front.restapi.tmregis.model/LoginDto';
 import { RegisterUserDto      } from '../front.restapi.tmregis.model/RegisterUserDto';
+import { ResponseSingleMessage } from '../front.restapi.tmregis.model/ResponseSingleMessage';
 import { UserRole } from '../front.restapi.tmregis.model/UserRole';
 
 /* tslint:disable:no-unused-variable */
@@ -21,7 +25,9 @@ let enumsMap: Set<string> = new Set<string>([
 ]);
 
 let typeMap: {[index: string]: any} = {
+    "LoginDto": LoginDto,
     "RegisterUserDto": RegisterUserDto,
+    "ResponseSingleMessage": ResponseSingleMessage,
 }
 
 type MimeTypeDescriptor = {
