@@ -1,6 +1,7 @@
 import { ResponseContext, RequestContext, HttpFile, HttpInfo } from '../http/http';
 import { Configuration} from '../configuration'
 
+import { JwtAuthResponse } from '../front.restapi.tmregis.model/JwtAuthResponse';
 import { LoginDto } from '../front.restapi.tmregis.model/LoginDto';
 import { RegisterUserDto } from '../front.restapi.tmregis.model/RegisterUserDto';
 import { ResponseSingleMessage } from '../front.restapi.tmregis.model/ResponseSingleMessage';
@@ -54,7 +55,7 @@ export class ObjectTmregisApi {
      * ログイン処理を実行する [機能ID] TMREGIS02
      * @param param the request object
      */
-    public loginWithHttpInfo(param: TmregisApiLoginRequest = {}, options?: Configuration): Promise<HttpInfo<void>> {
+    public loginWithHttpInfo(param: TmregisApiLoginRequest = {}, options?: Configuration): Promise<HttpInfo<JwtAuthResponse>> {
         return this.api.loginWithHttpInfo(param.loginDto,  options).toPromise();
     }
 
@@ -62,7 +63,7 @@ export class ObjectTmregisApi {
      * ログイン処理を実行する [機能ID] TMREGIS02
      * @param param the request object
      */
-    public login(param: TmregisApiLoginRequest = {}, options?: Configuration): Promise<void> {
+    public login(param: TmregisApiLoginRequest = {}, options?: Configuration): Promise<JwtAuthResponse> {
         return this.api.login(param.loginDto,  options).toPromise();
     }
 

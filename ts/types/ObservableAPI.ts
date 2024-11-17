@@ -2,6 +2,7 @@ import { ResponseContext, RequestContext, HttpFile, HttpInfo } from '../http/htt
 import { Configuration} from '../configuration'
 import { Observable, of, from } from '../rxjsStub';
 import {mergeMap, map} from  '../rxjsStub';
+import { JwtAuthResponse } from '../front.restapi.tmregis.model/JwtAuthResponse';
 import { LoginDto } from '../front.restapi.tmregis.model/LoginDto';
 import { RegisterUserDto } from '../front.restapi.tmregis.model/RegisterUserDto';
 import { ResponseSingleMessage } from '../front.restapi.tmregis.model/ResponseSingleMessage';
@@ -58,7 +59,7 @@ export class ObservableTmregisApi {
      * ログイン処理を実行する [機能ID] TMREGIS02
      * @param loginDto 
      */
-    public loginWithHttpInfo(loginDto?: LoginDto, _options?: Configuration): Observable<HttpInfo<void>> {
+    public loginWithHttpInfo(loginDto?: LoginDto, _options?: Configuration): Observable<HttpInfo<JwtAuthResponse>> {
         const requestContextPromise = this.requestFactory.login(loginDto, _options);
 
         // build promise chain
@@ -81,8 +82,8 @@ export class ObservableTmregisApi {
      * ログイン処理を実行する [機能ID] TMREGIS02
      * @param loginDto 
      */
-    public login(loginDto?: LoginDto, _options?: Configuration): Observable<void> {
-        return this.loginWithHttpInfo(loginDto, _options).pipe(map((apiResponse: HttpInfo<void>) => apiResponse.data));
+    public login(loginDto?: LoginDto, _options?: Configuration): Observable<JwtAuthResponse> {
+        return this.loginWithHttpInfo(loginDto, _options).pipe(map((apiResponse: HttpInfo<JwtAuthResponse>) => apiResponse.data));
     }
 
 }

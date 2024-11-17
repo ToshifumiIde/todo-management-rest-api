@@ -8,6 +8,7 @@ import {canConsumeForm, isCodeInRange} from '../util';
 import {SecurityAuthentication} from '../auth/auth';
 
 
+import { JwtAuthResponse } from '../front.restapi.tmregis.model/JwtAuthResponse';
 import { LoginDto } from '../front.restapi.tmregis.model/LoginDto';
 import { RegisterUserDto } from '../front.restapi.tmregis.model/RegisterUserDto';
 import { ResponseSingleMessage } from '../front.restapi.tmregis.model/ResponseSingleMessage';
@@ -125,10 +126,14 @@ export class TmregisApiResponseProcessor {
      * @params response Response returned by the server for a request to login
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async loginWithHttpInfo(response: ResponseContext): Promise<HttpInfo<void >> {
+     public async loginWithHttpInfo(response: ResponseContext): Promise<HttpInfo<JwtAuthResponse >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            return new HttpInfo(response.httpStatusCode, response.headers, response.body, undefined);
+            const body: JwtAuthResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "JwtAuthResponse", ""
+            ) as JwtAuthResponse;
+            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("400", response.httpStatusCode)) {
             const body: ResponseSingleMessage = ObjectSerializer.deserialize(
@@ -140,10 +145,10 @@ export class TmregisApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: void = ObjectSerializer.deserialize(
+            const body: JwtAuthResponse = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "void", ""
-            ) as void;
+                "JwtAuthResponse", ""
+            ) as JwtAuthResponse;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
