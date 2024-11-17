@@ -5,3 +5,19 @@ components:
       enum:
         - ROLE_ADMIN
         - ROLE_USER
+    ResponseSingleMessage:
+      type: object
+      properties:
+        httpStatusCode:
+          description: HTTPステータスコード
+          type: integer
+          example: 400
+        message:
+          description: エラーメッセージ
+          type: string
+          example: message
+        detail:
+          description: エラー詳細
+          type: string
+          example: detail
+

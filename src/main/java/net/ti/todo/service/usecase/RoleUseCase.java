@@ -20,4 +20,14 @@ public class RoleUseCase {
   public Role getRoleByRoleName(String roleName) {
     return roleRepository.getRoleByName(roleName);
   }
+
+  /**
+   * メールアドレスを指定してRoleを取得する
+   *
+   * @param email メールアドレス
+   * @return 権限のEntity
+   */
+  public Role getRoleByEmail(String email) {
+    return roleRepository.getRoleByEmail(email);
+  }
 }

@@ -4,6 +4,11 @@ services:
     build:
       context: ../
       dockerfile: ./docker/Dockerfile
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+      JET_EXPIRATION_MILLISECONDS: ${JET_EXPIRATION_MILLISECONDS}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - 2000:8080
       - 5005:5005

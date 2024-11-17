@@ -1,7 +1,10 @@
 import { ResponseContext, RequestContext, HttpFile, HttpInfo } from '../http/http';
 import { Configuration} from '../configuration'
 
+import { JwtAuthResponse } from '../front.restapi.tmregis.model/JwtAuthResponse';
+import { LoginDto } from '../front.restapi.tmregis.model/LoginDto';
 import { RegisterUserDto } from '../front.restapi.tmregis.model/RegisterUserDto';
+import { ResponseSingleMessage } from '../front.restapi.tmregis.model/ResponseSingleMessage';
 import { UserRole } from '../front.restapi.tmregis.model/UserRole';
 import { ObservableTmregisApi } from './ObservableAPI';
 
@@ -32,6 +35,24 @@ export class PromiseTmregisApi {
      */
     public createRegister(registerUserDto?: RegisterUserDto, _options?: Configuration): Promise<void> {
         const result = this.api.createRegister(registerUserDto, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * ログイン処理を実行する [機能ID] TMREGIS02
+     * @param loginDto 
+     */
+    public loginWithHttpInfo(loginDto?: LoginDto, _options?: Configuration): Promise<HttpInfo<JwtAuthResponse>> {
+        const result = this.api.loginWithHttpInfo(loginDto, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * ログイン処理を実行する [機能ID] TMREGIS02
+     * @param loginDto 
+     */
+    public login(loginDto?: LoginDto, _options?: Configuration): Promise<JwtAuthResponse> {
+        const result = this.api.login(loginDto, _options);
         return result.toPromise();
     }
 

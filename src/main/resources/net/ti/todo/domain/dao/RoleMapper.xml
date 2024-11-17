@@ -4,6 +4,22 @@
     <select id="getRoleByName" resultType="net.ti.todo.domain.entity.Role">
         SELECT id FROM role
         WHERE
-        name = #{roleName}
+            name = #{roleName}
+        LIMIT
+            1
+    </select>
+
+    <select id="getRoleByEmail" resultType="net.ti.todo.domain.entity.Role">
+        SELECT name FROM role
+        INNER JOIN
+            user_role
+            ON user_role.role_id = role.id
+        INNER JOIN
+            user
+            ON user_role.user_id = user.id
+        WHERE
+            user.email = #{email}
+        LIMIT
+            1
     </select>
 </mapper>

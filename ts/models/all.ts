@@ -1,2 +1,5 @@
+export * from '../front.restapi.tmregis.model/JwtAuthResponse'
+export * from '../front.restapi.tmregis.model/LoginDto'
 export * from '../front.restapi.tmregis.model/RegisterUserDto'
+export * from '../front.restapi.tmregis.model/ResponseSingleMessage'
 export * from '../front.restapi.tmregis.model/UserRole'

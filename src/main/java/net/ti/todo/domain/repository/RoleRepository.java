@@ -13,4 +13,9 @@ public interface RoleRepository {
    * @return 権限のEntity
    */
   Role getRoleByName(String roleName);
+
+  /**
+   * メールアドレスを指定してRoleを1件取得する
+   * */
+  Role getRoleByEmail(String email);
 }
