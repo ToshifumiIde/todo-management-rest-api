@@ -13,8 +13,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Generated;
 import jakarta.validation.Valid;
-import net.ti.todo.tmregis.model.LoginDto;
 import net.ti.todo.common.ResponseSingleMessage;
+import net.ti.todo.tmregis.model.JwtAuthResponse;
+import net.ti.todo.tmregis.model.LoginDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,7 +39,9 @@ public interface LoginApi {
     summary = "ログイン処理を実行する [機能ID] TMREGIS02",
     tags = {"tmregis"},
     responses = {
-      @ApiResponse(responseCode = "200", description = "OK"),
+      @ApiResponse(responseCode = "200", description = "OK", content = {
+        @Content(mediaType = "application/json", schema = @Schema(implementation = JwtAuthResponse.class))
+      }),
       @ApiResponse(responseCode = "400", description = "Bad Request", content = {
         @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseSingleMessage.class))
       })
@@ -50,7 +53,7 @@ public interface LoginApi {
     produces = {"application/json"},
     consumes = {"application/json"}
   )
-  ResponseEntity<Void> login(
+  ResponseEntity<JwtAuthResponse> login(
     @Parameter(name = "LoginDto", description = "") @Valid @RequestBody(required = false) LoginDto loginDto
   );
 
