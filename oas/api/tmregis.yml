@@ -22,6 +22,10 @@ paths:
       responses:
         "200":
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JwtAuthResponse"
         "400":
           description: Bad Request
           content:
@@ -99,6 +103,27 @@ components:
           minLength: 8
           maxLength: 255
           example: password
+        role:
+          description: 権限
+          type: string
+          $ref: "./common/common.yml#/components/schemas/UserRole"
+    JwtAuthResponse:
+      type: object
+      properties:
+        accessToken:
+          description: |
+            JWTで生成されたアクセストークン<br>
+            ヘッダー.ペイロード.署名<br>
+            で構成される
+          type: string
+          example: xxxxxx.yyyyyy.zzzzzz
+        tokenType:
+          description: |
+            トークン種別<br>
+            デフォルトでBearerを返却する
+          type: string
+          default: Bearer
+          example: Bearer
         role:
           description: 権限
           type: string
